@@ -1,4 +1,6 @@
 #!/bin/sh
+
+SERVICENGINX='nginx'
 SERVICEHTTP='httpd'
 SERVICEMYSQL='mysqld'
  
@@ -18,6 +20,27 @@ else
 		then 
 		echo “Starting service…”
 		systemctl start ${SERVICEHTTPD}
+
+	fi
+
+fi
+
+if ps ax | grep -v grep | grep $SERVICENGINX > /dev/null
+
+then
+    echo "$SERVICENGINX service running"
+
+else
+    echo "$SERVICENGINX is not running"
+    #echo "$SERVICENGINX is not running!" | mail -s "$SERVICENGINX down" root
+	SERVICENGINX='nginx.service'
+	echo -n "Found startap script - ${SERVICENGINX}. Start it? Y/n ?"
+
+	read answer 
+		if [ $answer = "y" -o $answer = "Y" ] 
+		then 
+		echo “Starting service…”
+		systemctl start ${SERVICENGINX}
 
 	fi
 
