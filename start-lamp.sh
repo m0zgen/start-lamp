@@ -5,6 +5,8 @@ SERVICENGINX='nginx'
 SERVICEHTTP='httpd'
 SERVICEMYSQL='mysqld'
 SERVICE='.service'
+
+checkall(){
  
 #Check HTTPD
 if ps ax | grep -v grep | grep $SERVICEHTTP > /dev/null
@@ -114,3 +116,46 @@ else
 
 	fi
 fi
+
+usage
+
+}
+
+
+# Functions
+
+# If empty params
+
+# check for valid usage
+
+#if [ x$1 = 'x' ]
+#then
+#echo "Usage: $0 <email address>"
+#exit 1
+#fi
+
+usage(){
+	echo -e "--------------------------------------------------------\n"
+	echo -e "\nYou can use script with arguments, example:\n\n $0 --help\n"
+	#printf "1111\n22222\n\nYou can use arguments: $0 --help"
+	exit 1
+}
+
+if [ $# -ne 1 ]; then
+    checkall
+    exit 1
+fi
+
+for i in "$@" ; do
+
+    if [[ $i == "--help" ]] ; then
+        echo $0: Can usage: Stop - stop all LAMP, Show - show services status
+        break
+    fi
+
+    if [[ $i == "--usage" ]] ; then
+        usage
+        break
+    fi
+
+done
